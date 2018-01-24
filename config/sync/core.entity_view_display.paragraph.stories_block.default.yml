@@ -1,0 +1,26 @@
+uuid: a96f4870-8332-4380-8511-d3bcccaf4ebd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stories_block.field_stories_block
+    - paragraphs.paragraphs_type.stories_block
+  module:
+    - block_field
+_core:
+  default_config_hash: 9GQ-kSNwr9b7fyUoX9Dx4icyO41e2tpgjj8cdmEIoV8
+id: paragraph.stories_block.default
+targetEntityType: paragraph
+bundle: stories_block
+mode: default
+content:
+  field_stories_block:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: block_field
+    region: content
+hidden:
+  created: true
+  uid: true

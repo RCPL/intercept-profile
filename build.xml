@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="InterCEPT" default="env">
+
+    <!-- Locations of required binaries. -->
+    <property name="drush" value="${project.basedir}/bin/drush"/>
+    <property name="composer" value="/usr/local/bin/composer"/>
+    <property name="rsync" value="/usr/bin/rsync"/>
+
+    <!-- Installation and build-specific variables. -->
+    <property name="docroot" value="docroot"/>
+    <property name="profile" value="${docroot}/profiles/contrib/intercept_profile"/>
+    <property name="site" value="${docroot}/sites/default"/>
+    <property name="version" value="HEAD"/>
+
+    <!-- Database credentials. -->
+    <property name="db.type" value="mysql"/>
+    <property name="db.host" value="localhost"/>
+    <property name="db.user" value="root"/>
+    <property name="db.password" value="root"/>
+    <property name="db.database" value="intercept"/>
+    <property name="db.url" value="${db.type}://${db.user}:${db.password}@${db.host}/${db.database}"/>
+
+    <!-- Finds required binaries. -->
+    <target name="env">
+        <if>
+            <not>
+                <available file="${drush}" property="drush.exists"/>
+            </not>
+            <then>
+                <exec command="which drush" outputProperty="drush"/>
+            </then>
+        </if>
+        <exec command="which composer" outputProperty="composer"/>
+        <exec command="which rsync" outputProperty="rsync"/>
+
+        <echo message="Found Drush: ${drush}"/>
+        <echo message="Found Composer: ${composer}"/>
+        <echo message="Found rsync: ${rsync}"/>
+    </target>
+
+    <!-- Syncs the profile into the Drupal code base. -->
+    <target name="push" depends="env">
+        <!-- Create the destination if it doesn't exist. -->
+        <mkdir dir="${profile}"/>
+        <!-- rsync the profile, excluding developer flotsam. -->
+        <filesync destinationDir="${profile}" rsyncPath="${rsync}" sourceDir="." verbose="false"
+                  exclude=".idea,bin,build.xml,.git,.gitignore,${docroot},node_modules,vendor" delete="true" />
+    </target>
+
+    <!-- Pull modified profile back to root. -->
+    <target name="pull" depends="env">
+        <filesync destinationDir="." rsyncPath="${rsync}" sourceDir="${profile}/" verbose="false"
+                  exclude="modules/contrib"/>
+    </target>
+
+    <!-- Installs InterCEPT using drush. -->
+    <target name="install" depends="env">
+        <!-- Use passthru() when executing drush site-install so that we'll know if errors occur. -->
+        <exec command="${drush} si intercept_profile --account-pass='rcpl' --db-url=${db.url} -y" dir="${docroot}"
+              passthru="true"/>
+    </target>
+
+    <!-- Reinstall InterCEPT via drush (assumes settings.php) -->
+    <target name="db-reset" depends="env">
+        <exec command="${drush} si intercept_profile --account-pass='rcpl' -y" dir="${docroot}" passthru="true"/>
+    </target>
+
+    <!-- Destroys the installed code base. -->
+    <target name="destroy">
+
+        <if>
+            <available file="${site}" property="site.exists"/>
+            <then>
+                <chmod file="${site}" mode="0755"/>
+            </then>
+        </if>
+
+        <delete failonerror="true" includeemptydirs="true">
+            <fileset dir="." defaultexcludes="false">
+                <include name="bin/**"/>
+                <include name="${docroot}/**"/>
+                <include name="node_modules/**"/>
+                <include name="vendor/**"/>
+            </fileset>
+        </delete>
+    </target>
+
+</project>

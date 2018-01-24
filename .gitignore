@@ -1,0 +1,23 @@
+# Exclude hidden OS files.
+.DS_Store
+._*
+Thumbs.db
+
+# Ignore Development tool files.
+.idea
+node_modules
+.sass-cache/
+console/cache/
+
+# Ignore binaries.
+bin
+
+# Ignore Composer-managed dependencies.
+vendor/
+docroot/
+
+# Ignore Feature info files used in development
+*.features.yml
+
+# Local dev
+.drupalvm

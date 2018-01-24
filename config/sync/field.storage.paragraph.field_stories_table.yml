@@ -1,0 +1,21 @@
+uuid: e86c6530-e957-4f2c-87bb-da35c1fa5f62
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - tablefield
+_core:
+  default_config_hash: fO4bRX-rkvjtJXlM3CqNcDRB3tDwbKoUYDGsKcN75No
+id: paragraph.field_stories_table
+field_name: field_stories_table
+entity_type: paragraph
+type: tablefield
+settings: {  }
+module: tablefield
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,23 @@
+uuid: 656a3507-4eed-41d9-8a73-4aef7a25e2b4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_stories_quote_text
+    - paragraphs.paragraphs_type.stories_quote
+  module:
+    - text
+_core:
+  default_config_hash: 2iZhTlHsoQKaE4bQC9TBMHSMDS2SWFcuD0QBH_dypHI
+id: paragraph.stories_quote.field_stories_quote_text
+field_name: field_stories_quote_text
+entity_type: paragraph
+bundle: stories_quote
+label: Quote
+description: 'Enter the quote. Please limit formatting.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

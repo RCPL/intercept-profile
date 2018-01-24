@@ -1,0 +1,11 @@
+uuid: 406781ba-9df5-4756-a403-b1d09c59fde5
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: RbXLSN3eddkWTH4ta3NtbMcvUu_pxKXIpUfFNJMQzQU
+id: stories_table
+label: Table
+icon_uuid: null
+description: null
+behavior_plugins: {  }

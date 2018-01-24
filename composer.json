@@ -1,0 +1,112 @@
+{
+    "name": "rcpl/intercept_profile",
+    "description": "Template for Drupal 8 sites built using the InterCEPT distribution.",
+    "type": "drupal-profile",
+    "license": "GPL-2.0+",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "behat/mink": "~1.7",
+        "behat/mink-goutte-driver": "~1.2",
+        "jcalderonzumba/gastonjs": "~1.0.2",
+        "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
+        "mikey179/vfsStream": "~1.2",
+        "phpunit/phpunit": "~4.8",
+        "symfony/css-selector": "~2.8",
+        "drush/drush": "9.0.0-beta7",
+        "drupal/drupal-extension": "~3.3.0",
+        "behat/behat": "^3.0",
+        "drupal/coder": "~8.2.0",
+        "phing/phing": "^2.14",
+        "drupal/devel": "^1.0",
+        "squizlabs/php_codesniffer": "2.*",
+        "se/selenium-server-standalone": "^2.53",
+        "drupal/console": "1.0.1",
+        "jakoch/phantomjs-installer": "1.9.8",
+        "composer/composer": "^1.4"
+    },
+    "require": {
+        "acquia/lightning": "~2.2.0",
+        "drupal/stories": "^2.0@alpha",
+        "drupal/intercept_core": "1.x-dev",
+        "drupal/intercept_equipment": "1.x-dev",
+        "drupal/intercept_event": "1.x-dev",
+        "drupal/intercept_location": "1.x-dev"
+    },
+    "config": {
+        "bin-dir": "bin/"
+    },
+    "repositories": {
+        "0": {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        "asset-packagist": {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "PhantomInstaller\\Installer::installPhantomJS",
+            "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+            "./bin/phing push"
+        ],
+        "post-update-cmd": [
+            "./bin/phing push"
+        ],
+        "push": [ 
+            "./bin/phing push"
+        ]
+    },
+    "extra": {
+        "installer-paths": {
+            "docroot/core": [
+                "type:drupal-core"
+            ],
+            "docroot/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "docroot/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "docroot/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "drush/contrib/{$name}": [
+                "type:drupal-drush"
+            ],
+            "docroot/libraries/{$name}": [
+                "type:bower-asset",
+                "type:npm-asset"
+            ]
+        },
+        "enable-patching": true,
+        "patches": {
+            "drupal/core": {
+                "2699157 - Plugin Lazy loading can cause usort warning": "https://www.drupal.org/files/issues/2699157-23.drupal.Plugin-Lazy-loading-can-cause-usort-warning.patch"
+            },
+            "drupal/addtocal": {
+                "Port to d8": "https://www.drupal.org/files/issues/portd7-2861672-4.patch"
+            },
+            "drupal/panels": {
+                "Page title empty": "https://www.drupal.org/files/issues/2869412-2-page_title_does_not_show_in_panels.patch"
+            },
+            "drupal/panelizer": {
+                "Preview new entities": "https://www.drupal.org/files/issues/2750491-4.patch"
+            },
+            "drupal/page_manager": {
+                "Page varient doesn't exist": "https://www.drupal.org/files/issues/2876880-page-varient-cache-2.patch"
+            }
+        },
+        "installer-types": [
+            "bower-asset",
+            "npm-asset"
+        ]
+    },
+    "autoload": {
+        "psr-4": {
+            "RCPL\\Intercept\\": "src"
+        }
+    }
+}

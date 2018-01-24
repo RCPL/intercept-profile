@@ -1,0 +1,28 @@
+name: InterCEPT Profile
+core: 8.x
+type: profile
+description: 'An InterCEPT site based on the Acquia Lightning distribution.'
+version: '8.x-1.x-dev'
+distribution:
+  name: InterCEPT
+dependencies:
+  - intercept_core
+  - intercept_equipment
+  - intercept_event
+  - intercept_location
+base profile:
+  name: lightning
+  excluded_dependencies:
+    - lightning_media
+    - lightning_media_bulk_upload
+    - lightning_media_document
+    - lightning_media_image
+    - lightning_media_instagram
+    - lightning_media_twitter
+    - lightning_media_video
+    - lightning_layout
+    - lightning_landing_page
+themes:
+  - bartik
+  - seven
+project: intercept_profile 

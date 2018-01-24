@@ -1,0 +1,43 @@
+# Lamp + PHP CS + Drush
+image: sharpe/drupal:php7
+
+pipelines:
+  branches:
+    8.x-2.x:
+      - step:
+          script:
+            #start mysql and create drupal db
+            - service mysql start
+            - mysql -h localhost --user=root --password=root -e "CREATE DATABASE drupal;"
+
+            # Install from composer.json
+            - composer install --no-interaction --optimize-autoloader
+
+            # Run PHP Code Sniffer on custom modules
+            - phpcs --standard=Drupal --ignore=node_modules,*.css,*.md,*.txt,*.info.yml docroot/profiles/contrib/openedu
+
+            # Make our repo the webroot
+            - rm -rf /var/www
+            - ln -s docroot html
+            - ln -s $(pwd) /var/www
+
+            #for some reason apache doesn't start by default when docker images are run through Bitbucket CI, so we start it manually
+            - apache2-foreground > /dev/null 2>&1 &
+
+            # Navigate to the root to run out tests
+            - cd /var/www/html
+
+            # setup a generic site install, needed for testing
+            - $BITBUCKET_CLONE_DIR/bin/drush status
+            - $BITBUCKET_CLONE_DIR/bin/drush si openedu --db-url='mysql://root:root@127.0.0.1/drupal' --account-pass='imagex' -y
+
+            # Run Tests
+            - export SIMPLETEST_DB=mysql://root:root@127.0.0.1/drupal
+            - export SIMPLETEST_BASE_URL=http://localhost/
+            - $BITBUCKET_CLONE_DIR/bin/phpunit -c core ./profiles/contrib/openedu
+
+            # Behat Tests
+            - $BITBUCKET_CLONE_DIR/bin/selenium-server-standalone > /dev/null 2>&1 &
+            - $BITBUCKET_CLONE_DIR/bin/phantomjs --webdriver=8643 > /dev/null 2>&1 &
+            - cd $BITBUCKET_CLONE_DIR
+            - $BITBUCKET_CLONE_DIR/bin/behat --config=./tests/behat.yml --strict --stop-on-failure

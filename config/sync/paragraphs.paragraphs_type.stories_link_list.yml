@@ -1,0 +1,11 @@
+uuid: 994d6352-1f58-4e3b-8334-b698537e1e9f
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 83Vm2gdh2yxrgWdivuOaR6XGxLpsB_HAeWPGm8mG4qw
+id: stories_link_list
+label: 'Link List'
+icon_uuid: null
+description: null
+behavior_plugins: {  }

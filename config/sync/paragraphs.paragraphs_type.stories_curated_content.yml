@@ -1,0 +1,11 @@
+uuid: 02a65f10-7dbf-4118-ad9a-e34ea4a868d5
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: RcJghZXelXd0N3xDXgLoIuo9HhtRR754QW-vZjk0DC0
+id: stories_curated_content
+label: 'Curated Content'
+icon_uuid: null
+description: null
+behavior_plugins: {  }

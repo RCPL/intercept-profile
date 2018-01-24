@@ -1,0 +1,26 @@
+uuid: addde11a-2dcd-4d54-bc0d-83bedc683850
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stories_text.field_stories_text_formatted
+    - paragraphs.paragraphs_type.stories_text
+  module:
+    - text
+_core:
+  default_config_hash: GrsybZcgu7YvkS7r3dZAE_z-IJhpK8gt-WCKB_VtiiE
+id: paragraph.stories_text.default
+targetEntityType: paragraph
+bundle: stories_text
+mode: default
+content:
+  field_stories_text_formatted:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden:
+  created: true
+  uid: true

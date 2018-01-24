@@ -1,0 +1,25 @@
+uuid: f15eae63-179b-44f3-862b-a5129374143e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_stories_quote_citation_url
+    - paragraphs.paragraphs_type.stories_quote
+  module:
+    - link
+_core:
+  default_config_hash: e1e50Vo9T15cOrtGOtJk4dcbHB9XkOTclD2ppQrkKRA
+id: paragraph.stories_quote.field_stories_quote_citation_url
+field_name: field_stories_quote_citation_url
+entity_type: paragraph
+bundle: stories_quote
+label: 'Citation URL'
+description: 'Enter an optional link for the citation.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 0
+field_type: link
