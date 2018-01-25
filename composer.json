@@ -31,7 +31,8 @@
         "drupal/intercept_core": "1.x-dev",
         "drupal/intercept_equipment": "1.x-dev",
         "drupal/intercept_event": "1.x-dev",
-        "drupal/intercept_location": "1.x-dev"
+        "drupal/intercept_location": "1.x-dev",
+        "drupal/material_admin": "^1.0@alpha"
     },
     "config": {
         "bin-dir": "bin/"
