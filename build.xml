@@ -5,6 +5,7 @@
     <property name="drush" value="${project.basedir}/bin/drush"/>
     <property name="composer" value="/usr/local/bin/composer"/>
     <property name="rsync" value="/usr/bin/rsync"/>
+    <property name="drupal" value="${project.basedir}/bin/drupal"/>
 
     <!-- Installation and build-specific variables. -->
     <property name="docroot" value="docroot"/>
@@ -56,8 +57,15 @@
     <!-- Installs InterCEPT using drush. -->
     <target name="install" depends="env">
         <!-- Use passthru() when executing drush site-install so that we'll know if errors occur. -->
-        <exec command="${drush} si intercept_profile --account-pass='rcpl' --db-url=${db.url} -y" dir="${docroot}"
-              passthru="true"/>
+        <exec command="${drush} si intercept_profile --account-pass='rcpl' --db-url=${db.url} -y" dir="${docroot}" passthru="true"/>
+    </target>
+
+    <!-- ReInstalls InterCEPT using drupal console. -->
+    <target name="reinstall" depends="env">
+        <!-- Use passthru() when executing drupal console site-install so that we'll know if errors occur. -->
+        <exec command="${drupal} site:install intercept_profile --no-interaction --force" dir="${docroot}" passthru="true"/>
+        <exec command="${drupal} cr all" dir="${docroot}" passthru="true"/>
+        <exec command="${drupal} ulu 1" dir="${docroot}" passthru="true"/>
     </target>
 
     <!-- Reinstall InterCEPT via drush (assumes settings.php) -->
@@ -85,4 +93,11 @@
         </delete>
     </target>
 
+    <target name="symlink-profile" depends="env">
+      <symlink target="../../../../composer.json" link="${profile}/composer.json" overwrite="TRUE" />
+      <symlink target="../../../../composer.lock" link="${profile}/composer.lock" overwrite="TRUE" />
+      <symlink target="../../../../intercept_profile.install" link="${profile}/intercept_profile.install" overwrite="TRUE" />
+      <symlink target="../../../../intercept_profile.profile" link="${profile}/intercept_profile.profile" overwrite="TRUE" />
+      <symlink target="../../../../intercept_profile.info.yml" link="${profile}/intercept_profile.info.yml" overwrite="TRUE" />
+    </target>
 </project>
