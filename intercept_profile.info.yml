@@ -23,6 +23,6 @@ base profile:
     - lightning_layout
     - lightning_landing_page
 themes:
-  - bartik
   - seven
+  - material_admin
 project: intercept_profile 
