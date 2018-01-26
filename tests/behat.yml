@@ -2,24 +2,33 @@ default:
   suites:
     default:
       contexts:
+        - FeatureContext
+        - WebContext
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext
         - Drupal\DrupalExtension\Context\MessageContext
         - Drupal\DrupalExtension\Context\DrushContext
   extensions:
     Behat\MinkExtension:
-      base_url: 'http://127.0.0.1:8080/'
       goutte: ~
+      sessions:
+        default:
+          goutte:
+            guzzle_parameters:
+              verify: false
+      javascript_session: selenium2
       selenium2:
-        wd_host: 'http://127.0.0.1:8643/wd/hub'
+        wd_host: http://localvm.intercept.com/:4444/wd/hub
+      base_url: http://localvm.intercept.com/
+      files_path: '%paths.base%/features/dummy'
     Drupal\DrupalExtension:
       blackbox: ~
       api_driver: 'drupal'
       drupal:
-        drupal_root: 'docroot'
+        drupal_root: '../docroot'
       drush:
         alias: 'self'
-      subcontexts:
-        paths:
-         - './tests/'
-        autoload: 0
+      #subcontexts:
+      #  paths:
+      #   - './tests/'
+      #  autoload: 0
